@@ -1,14 +1,20 @@
-# Nombre del Proyecto
+# Proyecto Tarea 2: Sistema de Seguimiento de Vuelos en Tiempo Real
 
 ## Descripción
 
-Proyecto de template para aplicaciones web full-stack con React + Vite, Node.js y PostgreSQL. Incluye configuración de Docker Compose para orquestación de contenedores.
+Este proyecto implementa un sistema de seguimiento de vuelos en tiempo real utilizando WebSockets para la comunicación de eventos y un mapa interactivo para la visualización de aeropuertos, rutas y aviones. Además, incluye un sistema de chat en tiempo real.
 
 ## Tecnologías Utilizadas
 
-- Frontend: React con Vite
-- Backend: Node.js con Express
-- Base de Datos: PostgreSQL
+- Frontend:
+  - React con Vite
+  - Leaflet para mapas interactivos
+  - Material-UI para componentes de interfaz
+  - WebSocket para comunicación en tiempo real
+- Backend:
+  - Node.js con Express
+  - WebSocket para manejo de eventos en tiempo real
+- Base de Datos: PostgreSQL (para almacenar mensajes de chat si es necesario)
 - ORM: Sequelize
 - Contenedores: Docker
 - Servidor Web: Nginx
@@ -17,29 +23,30 @@ Proyecto de template para aplicaciones web full-stack con React + Vite, Node.js 
 ## Estructura del Proyecto
 
 ```any
-proyecto/
+proyecto-tarea2/
 │
-├── react/
+├── frontend/
 │   ├── src/
+│   │   ├── components/
+│   │   ├── hooks/
+│   │   ├── services/
+│   │   ├── styles/
+│   │   ├── App.jsx
+│   │   └── main.jsx
 │   ├── public/
-│   ├── ...
 │   ├── package.json
 │   └── Dockerfile
 │
-├── node/
+├── backend/
 │   ├── src/
-│   │   ├── config/
+│   │   ├── controllers/
 │   │   ├── models/
 │   │   ├── routes/
-|   |   ├── controllers/
-|   |   ├── middleware/
-|   |   ├── migrations/
-|   |   ├── seeders/
-|   |   ├── util/
-|   |   ├── app.js
+│   │   ├── services/
+│   │   ├── websocket/
+│   │   ├── app.js
 │   │   └── index.js
 │   ├── package.json
-│   ├── entrypoint.sh
 │   └── Dockerfile
 │
 ├── nginx/
@@ -54,6 +61,7 @@ proyecto/
 
 - Docker
 - Docker Compose
+- Node.js (para desarrollo local)
 
 ## Configuración y Ejecución
 
@@ -61,18 +69,19 @@ proyecto/
 
 ```bash
 git clone [URL_DEL_REPOSITORIO]
-cd [NOMBRE_DEL_DIRECTORIO]
+cd proyecto-tarea2
 ```
 
 ### 2. Configuración de Variables de Entorno
 
 Crear un archivo `.env` en la raíz del proyecto y configurar las siguientes variables:
 
-```.env
-DB_NAME=db_name
-DB_USER=db_user
-DB_PASSWORD=db_password
-DB_HOST=db # Nombre del servicio de la base de datos en Docker Compose
+```env
+WEBSOCKET_URL=wss://tarea-2.2024-2.tallerdeintegracion.cl/connect
+DB_NAME=vuelos_db
+DB_USER=usuario
+DB_PASSWORD=contraseña
+DB_HOST=db
 ```
 
 ### 3. Iniciar la Aplicación
@@ -83,15 +92,13 @@ docker-compose up --build -d
 
 ### 4. Acceder a la Aplicación
 
-- Frontend: <http://localhost:5173>
-- Backend API: <http://localhost:3000>
-- Aplicación completa a través de Nginx: <http://localhost:8000>
+- Aplicación web: <http://localhost:8000>
 
 ## Desarrollo
 
 ### Frontend
 
-El frontend está desarrollado con React y Vite. Para desarrollo local:
+Para desarrollo local del frontend:
 
 ```bash
 cd frontend
@@ -101,7 +108,7 @@ npm run dev
 
 ### Backend
 
-El backend está desarrollado con Node.js y Express. Para desarrollo local:
+Para desarrollo local del backend:
 
 ```bash
 cd backend
@@ -109,18 +116,28 @@ npm install
 npm run dev
 ```
 
-## Base de Datos
+## Características Principales
 
-La base de datos PostgreSQL se inicializa automáticamente con Docker Compose. Para ejecutar migraciones:
-
-```bash
-docker-compose exec backend npx sequelize-cli db:migrate
-```
+1. Mapa interactivo con:
+   - Marcadores de aeropuertos
+   - Rutas de vuelos
+   - Posiciones de aviones en tiempo real
+2. Tabla informativa de vuelos
+3. Sistema de chat en tiempo real
+4. Actualizaciones en tiempo real de eventos de vuelo (despegues, aterrizajes, accidentes)
 
 ## Pruebas
 
-[Instrucciones para ejecutar pruebas, si las hay]
+[Instrucciones para ejecutar pruebas unitarias y de integración]
 
 ## Despliegue
 
-La aplicación está configurada para ser desplegada usando Docker Compose. Para un despliegue en producción, asegúrate de modificar las configuraciones de seguridad y optimización según sea necesario.
+La aplicación está configurada para ser desplegada usando Docker Compose. Para un despliegue en producción:
+
+1. Asegúrate de modificar las configuraciones de seguridad en `nginx.conf`
+2. Actualiza las variables de entorno para producción
+3. Ejecuta:
+
+```bash
+docker-compose -f docker-compose.prod.yml up -d
+```
