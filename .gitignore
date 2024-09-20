@@ -1,0 +1,27 @@
+# Node.js
+/node/node_modules/
+/node/logs
+/node/*.log
+/node/npm-debug.log*
+/node/yarn-debug.log*
+/node/yarn-error.log*
+
+# React
+/react/node_modules/
+/react/build/
+/react/.env
+
+# Nginx
+/nginx/*.log
+/nginx/conf.d/*.conf
+
+# Docker
+Dockerfile
+docker-compose.yml
+
+# Data folder
+/data/
+
+# Miscellaneous
+.DS_Store
+*.swp
