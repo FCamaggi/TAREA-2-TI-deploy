@@ -1,4 +1,4 @@
-const websocketUrl = import.meta.env.VITE_WEBSOCKET_URL;
+const websocketUrl = import.meta.env.VITE_WEBSOCKET_URL || 'wss://tarea-2.2024-2.tallerdeintegracion.cl/connect'
 
 export const connectWebSocket = () => {
     const socket = new WebSocket(websocketUrl);
