@@ -1,0 +1,27 @@
+version: '3'
+
+services:
+  frontend:
+    build:
+      context: ./frontend
+    container_name: frontend
+    working_dir: /usr/src/app
+    volumes:
+      - ./frontend:/usr/src/app
+      - /usr/src/app/node_modules
+    environment:
+      - VITE_WEBSOCKET_URL=wss://tarea-2.2024-2.tallerdeintegracion.cl/connect
+
+  nginx:
+    build:
+      context: ./nginx
+    container_name: nginx
+    restart: always
+    ports:
+      - '8000:80'
+    depends_on:
+      - frontend
+
+networks:
+  default:
+    name: app-network
