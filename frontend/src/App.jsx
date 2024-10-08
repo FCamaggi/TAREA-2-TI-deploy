@@ -1,4 +1,4 @@
-import React, { useState, useRef, useCallback } from 'react';
+import { useState, useRef, useCallback } from 'react';
 import { ThemeProvider, createTheme, CssBaseline } from '@mui/material';
 import {
   Box,
@@ -6,7 +6,6 @@ import {
   Grid,
   Paper,
   Typography,
-  AppBar,
   Toolbar,
   Button,
 } from '@mui/material';
